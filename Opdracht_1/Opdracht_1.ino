@@ -1,6 +1,8 @@
 const int LED_PIN = 25;
 const int BTN_PIN = 21;
 
+bool LED_STATE = 0;
+
 void setup() {
   pinMode(LED_PIN, OUTPUT);
   pinMode(BTN_PIN, INPUT);
@@ -32,7 +34,6 @@ void loop() {
 
   // === LED SWITCH ON BTN PRESS ===
 
-  bool LED_STATE = 0;
   if (digitalRead(BTN_PIN) == HIGH) {
     Serial.println(LED_STATE);
     if (LED_STATE == 0) {
@@ -42,7 +43,7 @@ void loop() {
       LED_STATE = 0;
       digitalWrite(LED_PIN, 0);
     }
-    delay(500);
+    delay(500); // Delay is to prevent the led from switching really, really fast.
   }
 
 }
