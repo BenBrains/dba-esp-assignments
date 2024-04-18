@@ -1,7 +1,7 @@
 const int LED_PIN = 25;
 const int BTN_PIN = 21;
 
-bool LED_STATE = 0;
+bool IN_USE = false;
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
@@ -11,13 +11,13 @@ void setup() {
 }
 
 void loop() {
-  // === LED BLINK : 2s CYCLE ===
+  // === 1. LED BLINK : 2s CYCLE ===
   // digitalWrite(LED_PIN, HIGH);
   // delay(2000);
   // digitalWrite(LED_PIN, LOW);
   // delay(2000);
 
-  // === LED WHEN BTN PRESSED ===
+  // === 2. LED WHEN BTN PRESSED ===
   // Serial.println(digitalRead(BTN_PIN));
   // if (digitalRead(BTN_PIN) == HIGH) {
   //   digitalWrite(LED_PIN, HIGH);
@@ -25,26 +25,18 @@ void loop() {
   //   digitalWrite(LED_PIN, LOW);
   // }
 
-  // === LED 5s ACTIVE ON BTN PRESS ===
+  // === 3. LED 5s ACTIVE ON BTN PRESS ===
   // if (digitalRead(BTN_PIN) == HIGH) {
   //   digitalWrite(LED_PIN, HIGH);
   //   delay(5000);
   //   digitalWrite(LED_PIN, LOW);
-  // } 
+  // }
 
-  // === LED SWITCH ON BTN PRESS ===
-
-  if (digitalRead(BTN_PIN) == HIGH) {
-    Serial.println(LED_STATE);
-    if (LED_STATE == 0) {
-      LED_STATE = 1;
-      digitalWrite(LED_PIN, 1);
-    } else {
-      LED_STATE = 0;
-      digitalWrite(LED_PIN, 0);
-    }
-    delay(500); // Delay is to prevent the led from switching really, really fast.
+  // === 4. LED SWITCH ON BTN PRESS ===
+  if (IN_USE && digitalRead(BTN_PIN)) {
+    IN_USE = false;
+    digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+  } else if (!digitalRead(BTN_PIN)) {
+    IN_USE = true;
   }
-
 }
-
